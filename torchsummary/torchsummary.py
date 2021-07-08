@@ -52,10 +52,7 @@ def _build_summary_dict(model, input_size, batch_size=-1, device=torch.device('c
             summary[m_key]["nb_params"] = nb_params
             summary[m_key]["trainable"] = trainable_params
 
-        if (
-            not isinstance(module, nn.Sequential)
-            and not isinstance(module, nn.ModuleList)
-        ):
+        if not any(module.children()):
             hooks.append(module.register_forward_hook(hook))
 
     # batch_size of 2 for batchnorm
